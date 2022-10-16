@@ -1,9 +1,8 @@
 package ee.mathias.are.helmes.exercise.sectorpicker.core.service;
 
 import ee.mathias.are.helmes.exercise.sectorpicker.core.dto.UserDTO;
-import ee.mathias.are.helmes.exercise.sectorpicker.core.entity.Sector;
 import ee.mathias.are.helmes.exercise.sectorpicker.core.entity.User;
-import ee.mathias.are.helmes.exercise.sectorpicker.core.mapper.SectorPickerMapper;
+import ee.mathias.are.helmes.exercise.sectorpicker.core.mapper.UserMapper;
 import ee.mathias.are.helmes.exercise.sectorpicker.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository repository;
-    private final SectorPickerMapper mapper;
+    private final UserMapper mapper;
 
     public UserDTO getUserById(long userId) {
         User user = repository.findById(userId).orElseThrow();
@@ -21,7 +20,7 @@ public class UserService {
     }
 
     public Long saveUser(UserDTO userDTO) {
-        User user = getUserFromDTO(userDTO);
+        User user = mapper.toUser(userDTO);
         return repository.save(user).getId();
     }
 
@@ -29,14 +28,5 @@ public class UserService {
         User user = repository.findById(userDTO.getId()).orElseThrow();
         mapper.updateUserFromDTO(userDTO, user);
         repository.save(user);
-    }
-
-    private User getUserFromDTO(UserDTO userDTO) {
-        User user = mapper.toUser(userDTO);
-        user.setSector(
-                Sector.builder()
-                        .id(userDTO.getSectorId())
-                        .build());
-        return user;
     }
 }

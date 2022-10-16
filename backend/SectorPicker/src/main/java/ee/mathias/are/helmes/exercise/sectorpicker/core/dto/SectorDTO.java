@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +21,10 @@ public class SectorDTO {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("parent")
-    private SectorDTO parent;
+    @JsonProperty("parent_id")
+    private Long parentId;
+
+    @JsonProperty("children")
+    private List<SectorDTO> children;
+
 }
