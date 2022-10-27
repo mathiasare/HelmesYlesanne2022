@@ -24,8 +24,8 @@ public class UserService {
         return repository.save(user).getId();
     }
 
-    public void updateUserFromDTO(UserDTO userDTO) {
-        User user = repository.findById(userDTO.getId()).orElseThrow();
+    public void updateUserFromDTO(long userId, UserDTO userDTO) {
+        User user = repository.findById(userId).orElseThrow();
         mapper.updateUserFromDTO(userDTO, user);
         repository.save(user);
     }
