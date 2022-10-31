@@ -5,6 +5,7 @@ import ee.mathias.are.helmes.exercise.sectorpicker.core.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService service;
@@ -26,13 +28,12 @@ public class UserController {
     }
 
     @PostMapping("/persist")
-    public ResponseEntity<Long> saveUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.saveUser(userDTO));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<HttpStatus> updateUserById(@PathVariable("id") long userId, @RequestBody UserDTO userDTO) {
-        service.updateUserFromDTO(userId, userDTO);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UserDTO> updateUserById(@PathVariable("id") long userId, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.updateUserFromDTO(userId, userDTO));
     }
 }

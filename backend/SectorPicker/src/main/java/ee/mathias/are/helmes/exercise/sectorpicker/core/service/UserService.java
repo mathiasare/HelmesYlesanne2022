@@ -19,14 +19,14 @@ public class UserService {
         return mapper.toDTO(user);
     }
 
-    public Long saveUser(UserDTO userDTO) {
+    public UserDTO saveUser(UserDTO userDTO) {
         User user = mapper.toUser(userDTO);
-        return repository.save(user).getId();
+        return mapper.toDTO(repository.save(user));
     }
 
-    public void updateUserFromDTO(long userId, UserDTO userDTO) {
+    public UserDTO updateUserFromDTO(long userId, UserDTO userDTO) {
         User user = repository.findById(userId).orElseThrow();
         mapper.updateUserFromDTO(userDTO, user);
-        repository.save(user);
+        return mapper.toDTO(repository.save(user));
     }
 }
