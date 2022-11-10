@@ -34,4 +34,8 @@ public class SectorService {
     private List<Sector> getRootLevelSectors() {
         return repository.findAllByParentIdIsNull();
     }
+
+    public boolean existsSector(long id) {
+        return repository.existsById(id);
+    }
 }

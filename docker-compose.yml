@@ -6,7 +6,7 @@ services:
     depends_on:
       - database
     build:
-      context: .
+      context: ./backend/SectorPicker
       dockerfile: Dockerfile
     ports:
       - 8080:8080
@@ -15,6 +15,17 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  sector-frontend:
+    container_name: sector-frontend
+    image: sector-frontend:latest
+    depends_on:
+      - sector-picker
+      - database
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
   database:
     image: postgres:14.1-alpine
     container_name: database

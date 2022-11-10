@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*") // This should be replaced with proper CORS handling.
 public class UserController {
 
     private final UserService service;
@@ -28,12 +30,12 @@ public class UserController {
     }
 
     @PostMapping("/persist")
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> saveUser(@Valid @RequestBody UserDTO userDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.saveUser(userDTO));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<UserDTO> updateUserById(@PathVariable("id") long userId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUserById(@PathVariable("id") long userId, @Valid @RequestBody UserDTO userDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.updateUserFromDTO(userId, userDTO));
     }
 }

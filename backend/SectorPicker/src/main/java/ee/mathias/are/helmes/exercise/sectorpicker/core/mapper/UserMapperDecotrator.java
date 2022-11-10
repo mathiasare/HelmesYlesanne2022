@@ -28,7 +28,7 @@ public abstract class UserMapperDecotrator implements UserMapper {
     @Override
     public void updateUserFromDTO(UserDTO userDTO, @MappingTarget User user) {
         mapper.updateUserFromDTO(userDTO, user);
-        if(userDTO.getSectorId() != null) {
+        if (userDTO.getSectorId() != null) {
             user.setSector(Sector.builder().id(userDTO.getSectorId()).build());
         }
     }

@@ -1,5 +1,6 @@
 package ee.mathias.are.helmes.exercise.sectorpicker.core.service;
 
+import ee.mathias.are.helmes.exercise.sectorpicker.common.exception.BadRequestException;
 import ee.mathias.are.helmes.exercise.sectorpicker.core.dto.UserDTO;
 import ee.mathias.are.helmes.exercise.sectorpicker.core.entity.User;
 import ee.mathias.are.helmes.exercise.sectorpicker.core.mapper.UserMapper;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository repository;
+
+    private final SectorService sectorService;
     private final UserMapper mapper;
 
     public UserDTO getUserById(long userId) {
@@ -21,6 +24,9 @@ public class UserService {
 
     public UserDTO saveUser(UserDTO userDTO) {
         User user = mapper.toUser(userDTO);
+        if (!sectorService.existsSector(user.getSector().getId())) {
+            throw new BadRequestException("Sector with the given ID is not found");
+        }
         return mapper.toDTO(repository.save(user));
     }
 

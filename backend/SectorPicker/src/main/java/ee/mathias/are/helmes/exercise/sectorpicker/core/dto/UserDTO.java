@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +20,14 @@ public class UserDTO {
     private Long id;
 
     @JsonProperty("name")
+    @NotBlank(message = "Name is missing!")
     private String name;
 
     @JsonProperty("sector_id")
+    @NotNull(message = "Sector Id is missing!")
     private Long sectorId;
 
     @JsonProperty("agreed_to_terms")
+    @AssertTrue(message = "Must agree to terms!")
     private Boolean agreedToTerms;
 }

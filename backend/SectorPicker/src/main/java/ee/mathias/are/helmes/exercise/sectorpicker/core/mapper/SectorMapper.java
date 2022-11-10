@@ -22,7 +22,7 @@ public interface SectorMapper {
         Sector sector = Sector.builder().name(sectorDTO.getName()).build();
         List<Sector> children = new ArrayList<>();
 
-        if(sectorDTO.getChildren() != null) {
+        if (sectorDTO.getChildren() != null) {
             for (SectorDTO dto : sectorDTO.getChildren()) {
                 Sector child = toSector(dto);
                 child.setParent(sector);
